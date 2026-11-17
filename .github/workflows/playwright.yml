@@ -1,0 +1,27 @@
+name: Playwright Tests
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v6
+    - name: Set up uv
+      uses: astral-sh/setup-uv@v6
+      with:
+        enable-cache: true
+        python-version: '3.13'
+    - name: Install dependencies
+      run: uv sync --locked
+    - name: Ensure browsers are installed
+      run: uv run playwright install --with-deps
+    - name: Run your tests
+      run: uv run pytest -o "addopts=--browser chromium" --tracing=retain-on-failure --html=report.html
+    - uses: actions/upload-artifact@v5
+      if: ${{ !cancelled() }}
+      with:
+        name: playwright-traces
+        path: test-results/

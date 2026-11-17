@@ -229,8 +229,14 @@ node_modules/
 
 report.html
 uv.lock
+!uv.lock
 package-lock.json
 package.json
 .github/
+!.github/
+.github/*
+!.github/workflows/
+.github/workflows/*
+!.github/workflows/playwright.yml
 .vscode/
 screenshots/
