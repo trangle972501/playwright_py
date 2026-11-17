@@ -72,4 +72,10 @@ window: `.venv\Scripts\activate`
 `pytest <path_test> -v`
 ## Run all test
 `pytest` 
-`pytest --html=report.html --self-contained-html `
+`pytest --html=reports/report.html --self-contained-html `
+
+# Open report 
+`open reports/report.html`
+
+# show trace script 
+`uv run playwright show-trace test-results/<trace-file>.zip`

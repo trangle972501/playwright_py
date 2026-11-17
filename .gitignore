@@ -228,9 +228,14 @@ node_modules/
 /playwright/.auth/
 
 report.html
-uv.lock
 package-lock.json
 package.json
 .github/
+!.github/
+.github/*
+!.github/workflows/
+.github/workflows/*
+!.github/workflows/playwright.yml
 .vscode/
 screenshots/
+.DS_Store
