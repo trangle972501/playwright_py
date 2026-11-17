@@ -76,3 +76,6 @@ window: `.venv\Scripts\activate`
 
 # Open report 
 `open reports/report.html`
+
+# show trace script 
+`uv run playwright show-trace test-results/<trace-file>.zip`

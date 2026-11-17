@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="3" time="10.588" timestamp="2026-11-17T13:43:47.042333+00:00" hostname="runnervmccnms"><testcase classname="tests.ui.login.test_login.TestLogin" name="test_login_successfully[chromium]" time="5.229" /><testcase classname="tests.ui.login.test_login.TestLogin" name="test_login_with_invalid_email[chromium]" time="3.149"><properties><property name="playwright_trace" value="test-results/tests-ui-login-test-login-py-testlogin-test-login-with-invalid-email-chromium/trace.zip" /></properties><failure message="AssertionError: Locator expected to be visible&#10;Actual value: None&#10;Error: element(s) not found &#10;Call log:&#10;  - Expect &quot;to_be_visible&quot; locator(&quot;//p[contains(text(), 'Your email or password is incorrect hahah!')]&quot;) with timeout 1000ms&#10;  - waiting for locator(&quot;//p[contains(text(), 'Your email or password is incorrect hahah!')]&quot;)&#10;&#10;Aria snapshot:&#10;- banner:&#10;  - link &quot;Website for automation practice&quot;:&#10;    - /url: /&#10;    - img &quot;Website for automation practice&quot;&#10;  - list:&#10;    - listitem:&#10;[+46 more lines; full report in element text]">self = &lt;login.test_login.TestLogin object at 0x745f6d10d6d0&gt;
+login_page = &lt;pages.login_page.LoginPage object at 0x745f6cf48550&gt;
+
+    def test_login_with_invalid_email(self, login_page: LoginPage):
+        login_page.login("invalid_email@example.com", PASSWORD)
+&gt;       login_page.expect_error_message(
+            "Your email or password is incorrect hahah!"
+        )
+
+tests/ui/login/test_login.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;pages.login_page.LoginPage object at 0x745f6cf48550&gt;
+error = 'Your email or password is incorrect hahah!'
+
+    def expect_error_message(self, error: str) -&gt; None:
+&gt;       expect(self.get_error_message(error)).to_be_visible()
+E       AssertionError: Locator expected to be visible
+E       Actual value: None
+E       Error: element(s) not found 
+E       Call log:
+E         - Expect "to_be_visible" locator("//p[contains(text(), 'Your email or password is incorrect hahah!')]") with timeout 1000ms
+E         - waiting for locator("//p[contains(text(), 'Your email or password is incorrect hahah!')]")
+E       
+E       Aria snapshot:
+E       - banner:
+E         - link "Website for automation practice":
+E           - /url: /
+E           - img "Website for automation practice"
+E         - list:
+E           - listitem:
+E             - link " Home":
+E               - /url: /
+E           - listitem:
+E             - link " Products":
+E               - /url: /products
+E           - listitem:
+E             - link " Cart":
+E               - /url: /view_cart
+E           - listitem:
+E             - link " Signup / Login":
+E               - /url: /login
+E           - listitem:
+E             - link " Test Cases":
+E               - /url: /test_cases
+E           - listitem:
+E             - link " API Testing":
+E               - /url: /api_list
+E           - listitem:
+E             - link " Video Tutorials":
+E               - /url: https://www.youtube.com/c/AutomationExercise
+E           - listitem:
+E             - link " Contact us":
+E               - /url: /contact_us
+E       - heading "Login to your account" [level=2]
+E       - textbox "Email Address": invalid_email@example.com
+E       - textbox "Password": "123456789"
+E       - paragraph: Your email or password is incorrect!
+E       - button "Login"
+E       - heading "OR" [level=2]
+E       - heading "New User Signup!" [level=2]
+E       - textbox "Name"
+E       - textbox "Email Address"
+E       - button "Signup"
+E       - insertion:
+E         - heading "These are topics related to the article that might interest you" [level=2]: Discover more
+E         - link "Secure login systems"
+E         - link "Account management software"
+E         - link "User authentication service"
+E       - insertion:
+E         - iframe
+E       - contentinfo:
+E         - heading "Subscription" [level=2]
+E         - textbox "Your email address"
+E         - button ""
+E         - paragraph: Get the most recent updates from our site and be updated your self...
+E         - paragraph: Copyright © 2021 All rights reserved
+
+pages/login_page.py:44: AssertionError</failure></testcase><testcase classname="tests.ui.login.test_login.TestLogin" name="test_login_with_invalid_password[chromium]" time="1.991" /></testsuite></testsuites>
