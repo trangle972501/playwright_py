@@ -38,6 +38,7 @@ jobs:
           mkdir -p test-results
 
           uv run pytest \
+            --tracing=retain-on-failure \
             --junitxml=test-results/junit.xml \
             --html=report.html \
             --self-contained-html
