@@ -240,3 +240,4 @@ package.json
 !.github/workflows/playwright.yml
 .vscode/
 screenshots/
+.DS_Store

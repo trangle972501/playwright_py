@@ -18,10 +18,40 @@ jobs:
       run: uv sync --locked
     - name: Ensure browsers are installed
       run: uv run playwright install --with-deps
-    - name: Run your tests
-      run: uv run pytest -o "addopts=--browser chromium" --tracing=retain-on-failure --html=report.html
-    - uses: actions/upload-artifact@v5
-      if: ${{ !cancelled() }}
+    - name: Run UI tests
+      id: run-tests
+      run: |
+        uv run pytest \
+          --browser chromium \
+          --tracing=retain-on-failure \
+          --junitxml=test-results/junit.xml \
+          --html=report.html \
+          --self-contained-html
+      continue-on-error: true
+     # Display test results directly in GitHub Checks
+    - name: Publish Test Results
+      uses: dorny/test-reporter@v2
+      if: success() || failure()
       with:
-        name: playwright-traces
-        path: test-results/
+        name: Playwright UI Test Results
+        path: test-results/junit.xml
+        reporter: java-junit
+        fail-on-error: false
+
+    # Upload HTML report and Playwright traces
+    - name: Upload Test Reports and Traces
+      uses: actions/upload-artifact@v5
+      if: always()
+      with:
+        name: playwright-ui-test-reports
+        path: |
+            report.html
+            test-results/
+        retention-days: 14
+     # Make the workflow fail if tests failed
+    - name: Check test result
+      if: always()
+      run: |
+        if [ "${{ steps.run-tests.outcome }}" = "failure" ]; then
+          exit 1
+        fi

@@ -48,15 +48,24 @@ def pytest_runtest_makereport(item, call):
     outcome = yield
     rep = outcome.get_result()
     # Only take a screenshot if the test failed during the call phase (not setup or teardown errors)
-    if rep.when == "call" and rep.failed:
-        # Access the 'page' fixture from the test function's arguments
-        page: Page = item.funcargs.get("page")
+     # Capture screenshot only when test execution fails
+    if rep.when != "call" or not rep.failed:
+        return
+    # Access the 'page' fixture from the test function's arguments
+    page: Page = item.funcargs.get("page")
+    if not page:
+        return
+    try:
         if page:
-            #1. Prepare a directory for screenshots if it doesn't exist
-            # (Use the directory name "screenshots" in the current working directory)
-            html_path = item.config.getoption("--html", default="report.html")
-            report_dir = os.path.dirname(os.path.abspath(html_path)) or "."
-            screenshot_dir = os.path.join(report_dir, "screenshots")
+            # Check whether HTML reporting is enabled
+            # html_path = item.config.getoption("--html", default="report.html")
+            #if not html_path:
+            screenshot_dir = os.path.join(os.getcwd(), "screenshots")
+            #else:
+                #Prepare a directory for screenshots if it doesn't exist
+                # (Use the directory name "screenshots" in the current working directory)
+                #report_dir = os.path.dirname(os.path.abspath(html_path)) or "."
+                #screenshot_dir = os.path.join(report_dir, "screenshots")
             os.makedirs(screenshot_dir, exist_ok=True)
 
             #2. Create a unique filename for the screenshot based on the test node
@@ -71,15 +80,17 @@ def pytest_runtest_makereport(item, call):
             pytest_html = item.config.pluginmanager.getplugin("html")
             if pytest_html:
                 # Use a relative path so the HTML can locate the image
-                relative_path = os.path.join("screenshots", file_name)
+                #relative_path = os.path.join("screenshots", file_name)
                 extra = getattr(rep, "extras", [])
                 # Embed an <img> tag that opens full-size on click
                 html = (
-                    f'<div><img src="{relative_path}" alt="screenshot" '
+                    f'<div><img src="{file_path}" alt="screenshot" '
                     f'style="width:25%;height:228px;" '
                     f'onclick="window.open(this.src)" align="right"/></div>'
                 )
                 extra.append(pytest_html.extras.html(html))
                 rep.extras = extra
-
-
+    except Exception:
+        logger.exception(
+            "Failed to capture or attach failure screenshot"
+        )
