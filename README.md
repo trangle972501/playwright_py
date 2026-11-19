@@ -1,81 +1,57 @@
 # playwright_py
-This is a responsibility that including my learning
-# Project struncture 
-config/
-- Manage environment, URL, timeout and browser settings
 
-pages/
-- Page Object Model — locator and action on each page
+This repository contains my Playwright with Python learning notes and test automation framework setup.
 
+## Project Structure
 
-components/
-- UI components reuse such as navbar, modal, table
+```text
+playwright_py/
+├── config/          # Environment, URL, timeout, and browser settings
+├── pages/           # Page Object Model — locators and actions for each page
+├── components/      # Reusable UI components (navbar, modal, table, etc.)
+├── tests/           # Test cases organized by feature
+├── test_data/       # Test data (JSON, CSV) and environment-specific datasets
+├── utils/           # Helpers, logger, and data generators
+├── fixtures/        # Browser, context, page initialization, and test dependencies
+├── api/             # API client and helpers for API testing integration
+├── reports/         # Test reports, screenshots, and traces
+├── scripts/         # Utility scripts to run and manage the framework
+├── conftest.py      # Pytest fixtures and common hooks
+├── pytest.ini       # Pytest configuration and markers
+├── pyproject.toml   # Dependencies, tool configuration, and project metadata
+├── .env.example     # Example environment variables
+└── .gitignore       # Ignored cache, secrets, and generated artifacts
 
-
-tests/
-- Test cases are organized by feature
-
-test_data/
-- Test data, JSON, CSV and data based on environments
-
-
-utils/
-Helper, logger, data generator and helper function
-
-
-fixtures/
-- init browser, context, page and test dependencies
-
-api/
-API client and API helpers if needing to integrate API testing
-
-reports/
-Test reports, screenshots and traces
-
-scripts/
-- script support to run and manage framework
-
-
-conftest.py
-Pytest fixtures and common hooks
-
-
-pytest.ini
-- Pytest configuration and markers
-
-
-pyproject.toml
-- Dependencies, tool configuration và project metadata
-
-
-.env.example
--  environment variables
-
-
-.gitignore
-- ignore cache, secrets and generated artifacts
+```
 
 ## Installation
-# 1. Install from a pyproject.toml file:
-    `uv pip install -r pyproject.toml`
-# 2. Install require browsers
-    - All browers: `uv run playwright install`
-    - Specific browser: `uv run playwright install chromium`
+1. Install dependencies from pyproject.toml:
+- `uv pip install -r pyproject.toml`
 
-## Activate python
-MacOs: `source .venv/bin/activate`
-window: `.venv\Scripts\activate`
-##Deactivate python env 
-`deactivate`
-# Run test
-## Run specific test
-`pytest <path_test> -v`
-## Run all test
-`pytest` 
-`pytest --html=reports/report.html --self-contained-html `
+2. Install required browsers:
+- All browsers:
+    `uv run playwright install`
+- Specific browser (e.g., Chromium):
+    `uv run playwright install chromium`
 
-# Open report 
-`open reports/report.html`
+## Virtual Environment
+- Activate (macOS / Linux):
+    `source .venv/bin/activate`
+- Activate (Windows):
+    `.venv\Scripts\activate`
+- Deactivate:
+    `deactivate`
 
-# show trace script 
-`uv run playwright show-trace test-results/<trace-file>.zip`
+## Running Tests
+- Run a specific test:
+    `pytest <path_to_test> -v`
+- Run all tests:
+    `Run all tests:`
+- Run all tests and generate a self-contained HTML report:
+    `pytest --html=reports/report.html --self-contained-html`
+
+## Reports & Debugging
+- Open HTML test report (macOS):
+    `open reports/report.html`
+- View Playwright trace:
+    `uv run playwright show-trace test-results/<trace-file>.zip`
